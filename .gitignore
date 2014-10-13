@@ -1,4 +1,5 @@
-dea/
+# InteliJ ignores
+.idea/
 *.iml
 .settings/
 target/
