@@ -17,19 +17,19 @@ public class PheromoneAnt extends Ant {
 		
 		addPath(direction);
 		
-		if ( dir == NORTH ){
+		if ( direction == NORTH ){
 			super.coordinate.setColumn(super.coordinate.getColumn() + 1);
 		}
 		
-		if ( dir == SOUTH ) {
+		if ( direction == SOUTH ) {
 			super.coordinate.setColumn(super.coordinate.getColumn() - 1);
 		}
 		
-		if ( dir == EAST ){
+		if ( direction == EAST ){
 			super.coordinate.setRow(super.coordinate.getRow() + 1);
 		}
 		
-		if ( dir == WEST ){
+		if ( direction == WEST ){
 			super.coordinate.setRow(super.coordinate.getRow() - 1);
 		}
 		
