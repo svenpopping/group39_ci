@@ -6,6 +6,7 @@ package maze;
 public class Node {
 
     private Node north, east, south, west;
+    private int pheromone = 0;
 
     public Node() {
         super();
@@ -41,6 +42,10 @@ public class Node {
 
     public void setWest(Node west) {
         this.west = west;
+    }
+
+    public void increasePheromone() {
+        this.pheromone++;
     }
 
     @Override

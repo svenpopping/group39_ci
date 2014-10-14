@@ -1,25 +1,35 @@
-package Ants;
+package ants;
 
 import java.util.ArrayList;
 
-import maze.Coordinate;
+import maze.PheromoneInterface;
+import objects.Coordinate;
+import objects.Direction;
 
 public abstract class Ant {
 	
 	protected Coordinate coordinate;
-	protected ArrayList<Coordinate> AntPath;
+	protected ArrayList<Direction> antPath;
+
+    protected PheromoneInterface pheromone;
 	
 	public Ant(int row, int column){
 		this.coordinate = new Coordinate(row, column);
+        this.antPath = new ArrayList<Direction>();
 	}
 	
-	public abstract void walk();
+	public abstract void walk(ArrayList<Direction> dir);
 	
-	public void Path(){
-		AntPath = new ArrayList<Coordinate>();
+	public void addPath(Direction dir){
+		this.antPath.add(dir);
 	}
-	
-	public void addPath(Coordinate last){
-		AntPath.add(last);
-	}
+
+    public void setPheromone(PheromoneInterface pheromone) {
+        this.pheromone = pheromone;
+    }
+
+    public Coordinate getCoordinate() {
+        return this.coordinate;
+    }
+
 }

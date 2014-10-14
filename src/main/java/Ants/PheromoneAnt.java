@@ -1,42 +1,40 @@
-package Ants;
+package ants;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import maze.Coordinate;
+import objects.Coordinate;
+import objects.Direction;
 
 public class PheromoneAnt extends Ant {
+
+    public PheromoneAnt(int row, int column) {
+        super(row, column);
+    }
 
 	/**
 	 * Method walk() lets a ScoutAnt walk in a certain direction.
 	 * @param dir - The direction.
 	 */
-	public void walk(Direction[] dir) {
-		
-		int sizeDirection = dir.size();
-		Direction direction = dir[new Random().nextInt(dir.length)];
-		
-		addPath(direction);
-		
-		if ( direction == NORTH ){
-			super.coordinate.setColumn(super.coordinate.getColumn() + 1);
-		}
-		
-		if ( direction == SOUTH ) {
-			super.coordinate.setColumn(super.coordinate.getColumn() - 1);
-		}
-		
-		if ( direction == EAST ){
-			super.coordinate.setRow(super.coordinate.getRow() + 1);
-		}
-		
-		if ( direction == WEST ){
-			super.coordinate.setRow(super.coordinate.getRow() - 1);
-		}
-		
-		maze.getNode().increasePheromone();
+	public void walk(ArrayList<Direction> dir) {
+        Direction direction = dir.get(new Random().nextInt(dir.size()));
+
+        super.coordinate.setCoordinate(direction.newCoordinate(this.coordinate));
+
+//		if ( direction == Direction.NORTH ) {
+//            super.coordinate.setColumn(super.coordinate.getColumn() + 1);
+//        }
+//		if ( direction == Direction.SOUTH ) {
+//			super.coordinate.setColumn(super.coordinate.getColumn() - 1);
+//		}
+//		if ( direction == Direction.EAST ) {
+//            super.coordinate.setRow(super.coordinate.getRow() + 1);
+//        }
+//		if ( direction == Direction.WEST ) {
+//            super.coordinate.setRow(super.coordinate.getRow() - 1);
+//        }
+
+        super.pheromone.increasePheromone(this.coordinate);
 	}
-	
-	public void pheromone(Coordinate crd){
-		Coordinate.pheromone = Coordinate.pheromone + 1;
-	}
+
 }

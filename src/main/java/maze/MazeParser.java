@@ -1,5 +1,7 @@
 package maze;
 
+import objects.Coordinate;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -42,24 +44,26 @@ public class MazeParser {
                 if (column + 1 < maze.getColumnLength())
                     try {
                         node.setEast(maze.getNode(new Coordinate(row, column + 1)));
-                    } catch
-                    
+                    } catch (NullPointerException e) {}
 
                 if ( row - 1 >= 0)
-                    node.setNorth(maze.getNode(new Coordinate(row - 1, column)));
+                    try {
+                        node.setNorth(maze.getNode(new Coordinate(row - 1, column)));
+                    } catch (NullPointerException e) {}
+
 
                 if ( column - 1 >= 0)
-                    node.setWest(maze.getNode(new Coordinate(row, column - 1)));
+                    try {
+                        node.setWest(maze.getNode(new Coordinate(row, column - 1)));
+                    } catch (NullPointerException e) {}
 
                 if ( row + 1 < maze.getRowLength())
-                    node.setSouth(maze.getNode(new Coordinate(row + 1, column)));
+                    try {
+                        node.setSouth(maze.getNode(new Coordinate(row + 1, column)));
+                    } catch (NullPointerException e) {}
             }
         }
         return maze;
-    }
-
-    public static void main(String[] args) {
-        parseMaze("src/main/resources/easy_maze.txt");
     }
 
 }

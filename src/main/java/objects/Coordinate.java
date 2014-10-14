@@ -1,4 +1,4 @@
-package maze;
+package objects;
 
 /**
  * Created by svenpopping on 13/10/14.
@@ -26,6 +26,11 @@ public class Coordinate {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.row = coordinate.getRow();
+        this.column = coordinate.getColumn();
     }
 
     @Override

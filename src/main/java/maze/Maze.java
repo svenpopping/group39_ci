@@ -1,14 +1,13 @@
 package maze;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import objects.Coordinate;
 
 /**
  * Created by svenpopping on 13/10/14.
  */
-public class Maze {
+public class Maze implements PheromoneInterface {
 
-    private Node[][] nodeTable;
+    public Node[][] nodeTable;
 
     public Maze (int rows, int columns) {
         this.nodeTable = new Node[rows][columns];
@@ -47,5 +46,10 @@ public class Maze {
             string += "\n";
         }
         return string;
+    }
+
+    @Override
+    public void increasePheromone(Coordinate coordinate) {
+        this.getNode(coordinate).increasePheromone();
     }
 }
