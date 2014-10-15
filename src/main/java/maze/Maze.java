@@ -2,12 +2,15 @@ package maze;
 
 import objects.Coordinate;
 
+import java.util.ArrayList;
+
 /**
  * Created by svenpopping on 13/10/14.
  */
 public class Maze implements PheromoneInterface {
 
     public Node[][] nodeTable;
+    public ArrayList<Node> deadEndPaths;
 
     public Maze (int rows, int columns) {
         this.nodeTable = new Node[rows][columns];
@@ -52,4 +55,10 @@ public class Maze implements PheromoneInterface {
     public void increasePheromone(Coordinate coordinate) {
         this.getNode(coordinate).increasePheromone();
     }
+
+    @Override
+    public void addDeadEnd(Node node) {
+        this.deadEndPaths.add(node);
+    }
+
 }

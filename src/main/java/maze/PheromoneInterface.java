@@ -9,4 +9,6 @@ public interface PheromoneInterface {
 
     public void increasePheromone(Coordinate coordinate);
 
+    public void addDeadEnd(Node node);
+
 }

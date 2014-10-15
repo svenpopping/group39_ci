@@ -1,5 +1,6 @@
 package ants;
 
+import maze.Node;
 import objects.Direction;
 
 import java.util.ArrayList;
@@ -12,21 +13,39 @@ public class ScoutAnt extends Ant {
     }
 
     /**
-     * Method walk() lets a ScoutAnt walk in a certain direction.
-     * @param dir - The direction.
+     *
+     * @param node
      */
     @Override
-    public void walk(ArrayList<Direction> dir) {
-        Direction direction = dir.get(new Random().nextInt(dir.size()));
+    public void walk(Node node) {
+        ArrayList<Direction> directions = node.getPossibleDirections();
+        Direction direction;
+        if (directions.size() == 2 && !super.antPath.isEmpty()) {
+            int position = directions.indexOf(getOppositeDirection(super.antPath.get(super.antPath.size() - 1)));
+            position = Math.abs(1 - position);
+            direction = directions.get(position);
 
-        if (super.antPath.size() != 0) {
-            while (direction.otherDirection(super.antPath.get(super.antPath.size() - 1)).equals(direction)) {
-                direction = dir.get(new Random().nextInt(dir.size()));
+            super.addPath(direction);
+            super.coordinate.setCoordinate(direction.newCoordinate(this.coordinate));
+            super.pheromone.increasePheromone(this.coordinate);
+
+            if (node.getDirectionNode(direction).getPossibleDirections().size() == 2) {
+                walk(node.getDirectionNode(direction));
+            }
+        } else {
+            direction = directions.get(new Random().nextInt(directions.size()));
+            if (super.antPath.size() != 0 && directions.size() != 1) {
+                while (direction.otherDirection(super.antPath.get(super.antPath.size() - 1)).equals(direction)) {
+                    direction = directions.get(new Random().nextInt(directions.size()));
+                }
+            }
+            super.addPath(direction);
+            super.coordinate.setCoordinate(direction.newCoordinate(this.coordinate));
+            super.pheromone.increasePheromone(this.coordinate);
+
+            if (node.getDirectionNode(direction).getPossibleDirections().size() == 2) {
+                walk(node.getDirectionNode(direction));
             }
         }
-
-        super.addPath(direction);
-        super.coordinate.setCoordinate(direction.newCoordinate(this.coordinate));
-        super.pheromone.increasePheromone(this.coordinate);
     }
 }

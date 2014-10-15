@@ -28,4 +28,5 @@ public enum Direction {
         if (direction == WEST) return EAST;
         return null;
     }
+
 }

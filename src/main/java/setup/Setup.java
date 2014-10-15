@@ -17,6 +17,9 @@ import java.util.ArrayList;
 public class Setup {
 
     private Maze maze;
+
+    private Coordinate startPosition, stopPosition;
+
     private ArrayList<ScoutAnt> scoutAnts = new ArrayList<ScoutAnt>();
     private ArrayList<PheromoneAnt> phermoneAnts = new ArrayList<PheromoneAnt>();
 
@@ -32,17 +35,7 @@ public class Setup {
 
     public void step() {
         for (ScoutAnt scoutAnt : scoutAnts) {
-            Coordinate coordinate = scoutAnt.getCoordinate();
-
-            Node node = this.maze.getNode(coordinate);
-            ArrayList<Direction> directions = new ArrayList<Direction>();
-
-            if (node.getEast() != null) directions.add(Direction.EAST);
-            if (node.getNorth() != null) directions.add(Direction.NORTH);
-            if (node.getWest() != null) directions.add(Direction.WEST);
-            if (node.getSouth() != null) directions.add(Direction.SOUTH);
-            
-            scoutAnt.walk(directions);
+            scoutAnt.walk(this.maze.getNode(scoutAnt.getCoordinate()));
         }
     }
 
@@ -54,24 +47,30 @@ public class Setup {
         String string = "";
         for (int x = 0; x < this.maze.nodeTable.length; x++) {
             for (int y = 0; y < this.maze.nodeTable[x].length; y++) {
+                boolean ant = false;
                 for (ScoutAnt scoutAnt : this.scoutAnts) {
                     if (scoutAnt.getCoordinate().getRow() == x && scoutAnt.getCoordinate().getColumn() == y) {
-                        string += "[x]";
+                        string += "[ANT]";
+                        ant = true;
+                        break;
                     }
-                    break;
                 }
-
-                if (this.maze.nodeTable[x][y] != null) {
-                    string += "[ ]";
-                } else {
-                    string += "   ";
+                if (!ant) {
+                    if (this.maze.nodeTable[x][y] != null) {
+                        if (this.maze.nodeTable[x][y].getPheromone() < 10)
+                            string += "[00" + this.maze.nodeTable[x][y].getPheromone() + "]";
+                        else if (this.maze.nodeTable[x][y].getPheromone() < 100)
+                            string += "[0" + this.maze.nodeTable[x][y].getPheromone() + "]";
+                        else
+                            string += "[" + this.maze.nodeTable[x][y].getPheromone() + "]";
+                    } else {
+                        string += "     ";
+                    }
                 }
             }
             string += "\n";
         }
         return string;
     }
-
-
 
 }
