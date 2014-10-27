@@ -5,16 +5,18 @@ package objects;
  */
 
 public enum Direction {
-    NORTH (-1, 0),
-    EAST (0, 1),
-    WEST (0, -1),
-    SOUTH (1, 0);
 
-    public final int drow, dcolumn;
+    NORTH (-1, 0, 1),
+    EAST (0, 1, 0),
+    WEST (0, -1, 2),
+    SOUTH (1, 0, 3);
 
-    Direction (int drow, int dcolumn) {
+    public final int drow, dcolumn, number;
+
+    Direction (int drow, int dcolumn, int number) {
         this.drow = drow;
         this.dcolumn = dcolumn;
+        this.number = number;
     }
 
     public Coordinate newCoordinate(Coordinate oldCoordinate) {
@@ -27,6 +29,10 @@ public enum Direction {
         if (direction == EAST) return WEST;
         if (direction == WEST) return EAST;
         return null;
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 
 }

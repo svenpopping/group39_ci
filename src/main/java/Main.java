@@ -1,27 +1,38 @@
-import maze.MazeParser;
-import objects.Coordinate;
-import maze.Maze;
-import maze.Node;
+import ants.Ant;
+import ants.ScoutAnt;
 import setup.Setup;
+
+import java.util.ArrayList;
 
 /**
  * Created by svenpopping on 13/10/14.
  */
 public class Main {
 
-    private double iterations, ants, phermone, evaporation, cc;
-
     public static void main(String[] args) {
-        double iterations, ants, phermone, evaporation, cc;
-        iterations = 250;
-        
-        Setup setup = new Setup("src/main/resources/easy_maze.txt", 10, 0);
+        float phermone, evaporation;
+        int ants, cc, iterations;
+        String maze;
 
-        for(int x = 0; x < iterations; x++) {
+        /**
+         *
+         */
+        iterations = 100;
+        ants = 100;
+        phermone = 1;
+        evaporation = 0.2f;
+        cc = 20000;
+        maze = "hard";
+
+        Setup setup = new Setup(maze, ants, evaporation, cc);
+        setup.step();
+
+        for (int i = 0; i < iterations; i++) {
+            System.out.println("========== [" + i + "] ==========");
+            setup.resetAnts(ants, cc);
             setup.step();
         }
         System.out.println(setup.toString());
     }
-
 
 }

@@ -10,10 +10,18 @@ import java.util.ArrayList;
 public class Node {
 
     private Node north, east, south, west;
-    private int pheromone = 0;
+    private float pheromone = 1;
+    private float evaporation = 0;
 
-    public Node() {
+    private ArrayList<Direction> surroundingNodes = new ArrayList<Direction>();
+
+    private boolean knot = false;
+
+    public Node(float evaporation) {
         super();
+        this.evaporation = evaporation;
+
+
     }
 
     public Node getNorth() {
@@ -48,11 +56,28 @@ public class Node {
         this.west = west;
     }
 
-    public void increasePheromone() {
-        this.pheromone++;
+    public boolean isKnot() {
+        return knot;
     }
 
-    public int getPheromone() {
+    public void setKnot(boolean knot) {
+        this.knot = knot;
+    }
+
+    public void increasePheromone(int pheromone) {
+        if (this.pheromone != 0)
+            this.pheromone += pheromone;
+    }
+
+    public void setPheromone(int pheromone) {
+        this.pheromone = pheromone;
+    }
+
+    public void updatePheromone() {
+        this.pheromone = (1 - this.evaporation) * this.pheromone;
+    }
+
+    public float getPheromone() {
         return this.pheromone;
     }
 
@@ -65,45 +90,21 @@ public class Node {
     }
 
     public ArrayList<Direction> getPossibleDirections() {
-        ArrayList<Direction> dirs = new ArrayList<Direction>();
+        this.surroundingNodes.clear();
+        if (this.surroundingNodes.size() == 0) {
+            if (this.east != null && this.east.getPheromone() != 0)
+                surroundingNodes.add(Direction.EAST);
 
-        if (this.east != null)
-            dirs.add(Direction.EAST);
+            if (this.west != null && this.west.getPheromone() != 0)
+                surroundingNodes.add(Direction.WEST);
 
-        if (this.north != null)
-            dirs.add(Direction.NORTH);
+            if (this.south != null && this.south.getPheromone() != 0)
+                surroundingNodes.add(Direction.SOUTH);
 
-        if (this.west != null)
-            dirs.add(Direction.WEST);
-
-        if (this.south != null)
-            dirs.add(Direction.SOUTH);
-
-        return dirs;
+            if (this.north != null && this.north.getPheromone() != 0)
+                surroundingNodes.add(Direction.NORTH);
+        }
+        return this.surroundingNodes;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Node node = (Node) o;
-
-        if (!east.equals(node.east)) return false;
-        if (!north.equals(node.north)) return false;
-        if (!south.equals(node.south)) return false;
-        if (!west.equals(node.west)) return false;
-
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "north=" + north +
-                ", east=" + east +
-                ", south=" + south +
-                ", west=" + west +
-                '}';
-    }
 }

@@ -1,5 +1,6 @@
 package maze;
 
+import ants.Ant;
 import objects.Coordinate;
 
 /**
@@ -10,5 +11,9 @@ public interface PheromoneInterface {
     public void increasePheromone(Coordinate coordinate);
 
     public void addDeadEnd(Node node);
+
+    public void antsAtStopPosition(Ant ant);
+
+    public void updatePheromone();
 
 }

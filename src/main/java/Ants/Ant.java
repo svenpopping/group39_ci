@@ -9,14 +9,24 @@ import objects.Direction;
 
 public abstract class Ant {
 	
-	protected Coordinate coordinate;
+	protected Coordinate coordinate, stopPosition, startPosition;
 	protected ArrayList<Direction> antPath;
+	protected ArrayList<Node> antPathNodes;
+    protected int maxPathLength;
+    protected Node currentNode;
 
     protected PheromoneInterface pheromone;
+
+    protected boolean atStopCoordinate = false;
 	
-	public Ant(int row, int column){
-		this.coordinate = new Coordinate(row, column);
+	public Ant(Coordinate start, Coordinate stop, int maxPathLength){
+		this.coordinate = start;
+        this.startPosition = start.clone();
+		this.stopPosition = stop;
+        this.maxPathLength = maxPathLength;
+
         this.antPath = new ArrayList<Direction>();
+        this.antPathNodes = new ArrayList<Node>();
 	}
 	
 	public abstract void walk(Node node);
@@ -24,6 +34,10 @@ public abstract class Ant {
 	public void addPath(Direction dir){
 		this.antPath.add(dir);
 	}
+
+    public void addNodePath(Node node) {
+        this.antPathNodes.add(node);
+    }
 
     public void setPheromone(PheromoneInterface pheromone) {
         this.pheromone = pheromone;
@@ -41,4 +55,48 @@ public abstract class Ant {
         return null;
     }
 
+    public void setAtStopCoordinate(boolean flag) {
+        this.atStopCoordinate = flag;
+    }
+
+    public boolean isAtStopCoordinate() {
+        return this.atStopCoordinate;
+    }
+
+    public String getAntPath() {
+        String string = "";
+        for (Direction dir : antPath) {
+            string += dir.getNumber() + ";";
+        }
+        return string;
+    }
+
+    public ArrayList<Node> getAntPathNodes() {
+        return this.antPathNodes;
+    }
+
+    public int getMaxPathLength() {
+        return this.maxPathLength;
+    }
+
+    @Override
+    public String toString() {
+        return "Ant@" + this.getCoordinate().toString();
+    }
+
+    public Coordinate getStopPosition() {
+        return stopPosition;
+    }
+
+    public Coordinate getStartPosition() {
+        return startPosition;
+    }
+
+    public void setStopPosition(Coordinate stopPosition) {
+        this.stopPosition = stopPosition;
+    }
+
+    public void setStartPosition(Coordinate startPosition) {
+        this.startPosition = startPosition;
+    }
 }

@@ -34,6 +34,14 @@ public class Coordinate {
     }
 
     @Override
+    public String toString() {
+        return "Coordinate{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Coordinate)) return false;
@@ -44,6 +52,11 @@ public class Coordinate {
         if (row != that.row) return false;
 
         return true;
+    }
+
+    @Override
+    public Coordinate clone() {
+        return new Coordinate(this.row, this.column);
     }
 
 }
